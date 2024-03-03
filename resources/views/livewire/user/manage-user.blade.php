@@ -46,9 +46,6 @@
                                 <div class="font-semibold text-left">NO</div>
                             </th>
                             <th class="p-2">
-                                <div class="font-semibold text-center">NIK</div>
-                            </th>
-                            <th class="p-2">
                                 <div class="font-semibold text-center">NAMA</div>
                             </th>
                             <th class="p-2">
@@ -75,10 +72,6 @@
                                         {{ $users->firstItem() + $key }}
                                     </div>
                                 </td>
-                                <td class="p-2">
-                                    <div class="text-center">{{ $row->nik }}</div>
-                                </td>
-
                                 <td class="p-2">
                                     <div class="text-center">{{ $row->name }}</div>
                                 </td>

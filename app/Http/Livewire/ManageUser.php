@@ -2,10 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Citys;
-use App\Models\Golongan;
-use App\Models\Jabatan;
-use App\Models\Pegawai;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
@@ -71,7 +67,6 @@ class ManageUser extends Component
     private function resetInputFields()
     {
         $this->name = '';
-        $this->nik = '';
         $this->email = '';
         $this->password = "";
         $this->search = "";
@@ -91,7 +86,6 @@ class ManageUser extends Component
         if ($this->user_id) { //Update
             $this->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'phone' => ['required'],
                 'role' => ['required'],
                 'email' => ['required', 'string', 'email', 'max:255'],
             ]);
@@ -164,7 +158,6 @@ class ManageUser extends Component
     {
         $n = User::find($id);
         $n->delete();
-        Pegawai::where('user_id', $id)->update(['user_id' => null]);
         session()->flash('success', $n->name . ' Deleted Successfully.');
     }
 
