@@ -67,14 +67,12 @@ class User extends Authenticatable
     {
         switch ($this->role) {
             case 1:
-                return "Super Admin";
+                return "Admin";
                 break;
             case 2:
-                return "User";
-                break;
-            case 3:
                 return "Resepsionis";
                 break;
+          
             default:
                 return "Not Role";
                 break;

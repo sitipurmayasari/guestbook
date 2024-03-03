@@ -49,10 +49,8 @@
                             <label for="exampleFormControlInput1"
                                 class="block text-gray-700 text-sm font-bold mb-2">Role: *</label>
                             <select wire:model="role" class="form-select rounded-md shadow-sm mt-1 block w-full">
-                                <option value="1">SUPER ADMIN</option>
-                                <option value="2">ADMIN</option>
-                                <option value="3">PEGAWAI</option>
-                                <option value="4">KEUANGAN</option>
+                                <option value="1">ADMIN</option>
+                                <option value="2">RESEPSIONIS</option>
                             </select>
                             @error('role')
                                 <span class="text-red-500">{{ $message }}</span>

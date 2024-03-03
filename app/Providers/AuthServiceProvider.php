@@ -29,18 +29,11 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == 1;
         });
 
-        Gate::define('only-pegawai', function (User $user) {
-            return $user->role == 3;
-        });
-
-        Gate::define('only-admin', function (User $user) {
+        Gate::define('only-resepsionis', function (User $user) {
             return $user->role == 2;
         });
-      
-        Gate::define('only-keuangan', function (User $user) {
-            return $user->role == 4;
-        });
 
+       
         //
     }
 }

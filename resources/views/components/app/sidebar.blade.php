@@ -40,8 +40,9 @@
                     {{-- <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">Main Menu</span> --}}
                 </h3>
                 <ul class="mt-3">
-                    {{-- dashboard --}}
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-yellow-700' }} @endif">
+
+                      {{-- dashboard --}}
+                      <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-yellow-700' }} @endif">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['calendar'])) {{ 'hover:text-slate-200' }} @endif"
                         href="{{ route('dashboard') }}">
                             <div class="flex items-center">
@@ -60,8 +61,27 @@
                             </div>
                         </a>
                     </li>
-
-                    {{-- buku tamu --}}
+                    @if (auth()->user()->role==2)
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['visitors'])) {{ 'bg-yellow-700' }} @endif">
+                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['calendar'])) {{ 'hover:text-slate-200' }} @endif"
+                        href="{{ route('visitors') }}">
+                            <div class="flex items-center">
+                                <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                                    <path
+                                        class="fill-current @if (in_array(Request::segment(1), ['visitors'])) {{ 'text-yellow-500' }}@else{{ 'text-slate-600' }} @endif"
+                                        d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                    <path
+                                        class="fill-current @if (in_array(Request::segment(1), ['visitors'])) {{ 'text-yellow-300' }}@else{{ 'text-slate-400' }} @endif"
+                                        d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                </svg>
+                                <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Daftar Pengunjung</span>
+                            </div>
+                        </a>
+                    </li>
+                    @endif
+                  
+                    @if (auth()->user()->role==1)
+                        {{-- buku tamu --}}
                     <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['visitors'])) {{ 'bg-yellow-700' }} @endif">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['calendar'])) {{ 'hover:text-slate-200' }} @endif"
                         href="{{ route('visitors') }}">
@@ -114,6 +134,8 @@
                             </div>
                         </a>
                     </li>
+                    @endif
+                    
                 </ul>
             </div>
         </div>
