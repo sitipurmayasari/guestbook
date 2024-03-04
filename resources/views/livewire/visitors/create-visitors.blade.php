@@ -125,6 +125,8 @@
                                     <option value="SD">SEKOLAH DASAR</option>
                                     <option value="SMP">SMP / SEDERAJAT</option>
                                     <option value="SMA">SMA / SEDERAJAT</option>
+                                    <option value="D3">DIPLOMA 3</option>
+                                    <option value="D4">DIPLOMA 4</option>
                                     <option value="S1">STRATA 1</option>
                                     <option value="S2">STRATA 2</option>
                                     <option value="S3">STRATA 3</option>
