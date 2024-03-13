@@ -67,9 +67,9 @@
                             <th class="p-2">
                                 <div class="font-semibold text-center">TUJUAN</div>
                             </th>
-                            <th class="p-2">
+                            {{-- <th class="p-2">
                                 <div class="font-semibold text-center">FOTO</div>
-                            </th>
+                            </th> --}}
                             <th class="p-2">
                                 <div class="font-semibold text-center">DETAIL</div>
                             </th>
@@ -101,13 +101,13 @@
                                 <td class="p-2">
                                     <div class="text-left">{{ $row->purpose }}</div>
                                 </td>
-                                <td class="p-2">
+                                {{-- <td class="p-2">
                                     <div class="text-center">
                                         <a href="{{ $row->foto }}" target="__blank">
                                             <img src="{{ $row->foto}}" alt="" width="50px"
                                                 height="50px"></a>
                                     </div>
-                                </td>
+                                </td> --}}
                                 <td class="p-2">
                                     <div class="text-right py-2">
                                         <a href="{{ route('visitors.detail', $row->id) }}" type="button"
