@@ -70,9 +70,11 @@
                             {{-- <th class="p-2">
                                 <div class="font-semibold text-center">FOTO</div>
                             </th> --}}
+                            @if (auth()->user()->role==1)
                             <th class="p-2">
                                 <div class="font-semibold text-center">DETAIL</div>
                             </th>
+                            @endif
                         </tr>
                     </thead>
                     <!-- Table body -->
@@ -108,6 +110,7 @@
                                                 height="50px"></a>
                                     </div>
                                 </td> --}}
+                                @if (auth()->user()->role==1)
                                 <td class="p-2">
                                     <div class="text-right py-2">
                                         <a href="{{ route('visitors.detail', $row->id) }}" type="button"
@@ -121,6 +124,7 @@
                                         </a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr>
