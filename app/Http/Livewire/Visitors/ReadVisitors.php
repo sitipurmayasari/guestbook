@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class ReadVisitors extends Component
 {
     use WithPagination;
-    public $search,$filter_status, $paginate = 5;
+    public $search,$filter_status, $paginate = 10;
     public $visitor_id;
 
     public function render()
