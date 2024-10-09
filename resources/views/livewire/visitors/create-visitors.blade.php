@@ -59,7 +59,7 @@
                             <x-jet-input-error for="tgl" class="mt-2" />
                         </div>
                         <div class="col-span-6 sm:col-span-6">
-                            <x-jet-label for="origin" value="Asal Instansi" />
+                            <x-jet-label for="origin" value="Asal *Instansi/Perusahaan/Lembaga dsb " />
                             <x-jet-input id="origin" type="text"  class="bg-white mt-1 block w-full"
                             wire:model="origin" />
                         <x-jet-input-error for="origin" class="mt-2" />
