@@ -63,26 +63,11 @@
                             <x-jet-input id="origin" type="text"  class="bg-white mt-1 block w-full"
                             wire:model="origin" />
                         <x-jet-input-error for="origin" class="mt-2" />
-                        </div>
+                        </div> 
                         <div class="col-span-6 sm:col-span-6">
                             <x-jet-label for="purpose" value="Tujuan" />
                             <textarea id="purpose" type="text" class="bg-white rounded mt-1 block w-full" wire:model="purpose"></textarea>
                             <x-jet-input-error for="purpose" class="mt-2" />
-                        </div>
-                        <div class="col-span-6 sm:col-span-6">
-                            <x-jet-label for="telp" value="No. Telp" />
-                            <x-jet-input id="telp" type="number"  class="bg-white mt-1 block w-full"
-                            wire:model="telp" />
-                            <x-jet-input-error for="telp" class="mt-2" />
-                        </div>
-
-                        @if ($category==2)
-                            
-                        <div class="col-span-6 sm:col-span-6">
-                            <x-jet-label for="email" value="Email" />
-                            <x-jet-input id="email" type="email"  class="bg-white mt-1 block w-full"
-                            wire:model="email" />
-                            <x-jet-input-error for="email" class="mt-2" />
                         </div>
                         <div class="grid grid-cols-6 gap-6 mt-2">
 
@@ -114,11 +99,26 @@
                                 <x-jet-input-error for="age" class="mt-2" />
                             </div>
                         </div>
+                        <div class="col-span-6 sm:col-span-6">
+                            <x-jet-label for="telp" value="No. Telp" />
+                            <x-jet-input id="telp" type="number"  class="bg-white mt-1 block w-full"
+                            wire:model="telp" />
+                            <x-jet-input-error for="telp" class="mt-2" />
+                        </div>
+
+                        @if ($category==2)
+                            
+                        <div class="col-span-6 sm:col-span-6">
+                            <x-jet-label for="email" value="Email" />
+                            <x-jet-input id="email" type="email"  class="bg-white mt-1 block w-full"
+                            wire:model="email" />
+                            <x-jet-input-error for="email" class="mt-2" />
+                        </div>
 
                         <div class="grid grid-cols-6 gap-6 mt-2">
                             <div class="col-span-6 sm:col-span-3">
                                 <x-jet-label for="school" value="Pendidikan Terakhir" />
-                                <select wire:model="origin" id="origin" name="origin"
+                                <select wire:model="school" id="school" name="school"
                                     class="form-select rounded-md shadow-sm mt-1 block w-full">
                                     <option value="">PILIH PENDIDIKAN</option>
                                     <option value="TS">TIDAK SEKOLAH</option>

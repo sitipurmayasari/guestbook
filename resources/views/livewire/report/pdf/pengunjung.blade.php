@@ -96,16 +96,18 @@
                         <td>{{ $row->name }}</td>
                         <td>{{ $row->origin }}</td>
                         <td>{{ $row->purpose }}</td>
+                        <td>
+                            @if ($row->gender == "P")
+                                Perempuan
+                            @else
+                                Laki - Laki
+                            @endif
+                        </td>
+                        <td>{{$row->age}} th</td>
                         <td>{{ $row->telp }}</td>
                         @if (request()->get('category') == 2)
-                            <td>
-                                @if ($row->gender == "P")
-                                    Perempuan
-                                @else
-                                    Laki - Laki
-                                @endif
-                            </td>
-                            <td>{{$row->age}} th</td>
+                            <td>{{$row->email}}</td>
+                            <td>{{$row->school}}</td>
                             <td>{{$row->work}}</td>
                         @endif
                         <td>{{ $row->created_at}}</td>
