@@ -76,10 +76,12 @@
                     <th>Nama</th>
                     <th>Asal</th>
                     <th>Tujuan</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Usia</th>
                     <th>Telp</th>
                     @if (request()->get('category') == 2)
-                        <th>Jenis Kelamin</th>
-                        <th>Usia</th>
+                        <th>Email</th>
+                        <th>Pendidikan</th>
                         <th>Pekerjaan</th>
                     @endif
                     <th>Waktu Kunjungan</th>
@@ -99,15 +101,21 @@
                         <td>
                             @if ($row->gender == "P")
                                 Perempuan
-                            @else
+                            @elseif($row->gender == "L")
                                 Laki - Laki
+                            @else
+                                -
                             @endif
                         </td>
-                        <td>{{$row->age}} th</td>
+                        <td>
+                            @if ($row->age != null)
+                                {{$row->age}} th
+                            @endif
+                        </td>
                         <td>{{ $row->telp }}</td>
                         @if (request()->get('category') == 2)
                             <td>{{$row->email}}</td>
-                            <td>{{$row->school}}</td>
+                            <td>{{$row->school}} {{$row->education}}</td>
                             <td>{{$row->work}}</td>
                         @endif
                         <td>{{ $row->created_at}}</td>
