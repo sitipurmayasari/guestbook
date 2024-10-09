@@ -115,7 +115,7 @@
                         <td>{{ $row->telp }}</td>
                         @if (request()->get('category') == 2)
                             <td>{{$row->email}}</td>
-                            <td>{{$row->school}} {{$row->education}}</td>
+                            <td>{{$row->school}} - {{$row->education}}</td>
                             <td>{{$row->work}}</td>
                         @endif
                         <td>{{ $row->created_at}}</td>
