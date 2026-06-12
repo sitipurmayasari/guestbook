@@ -19,7 +19,7 @@ function listDevice(){
     CURLOPT_CUSTOMREQUEST => 'GET',
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('STARSENDER_KEY')
+        'Authorization: ' . config('services.blast.starsender_key')
     ),
 ));
 
@@ -39,7 +39,7 @@ function detailDevice($idDevice){
   CURLOPT_CUSTOMREQUEST => 'GET',
   CURLOPT_HTTPHEADER => array(
     'Content-Type:application/json',
-    'Authorization: ' . env('STARSENDER_KEY')
+    'Authorization: ' . config('services.blast.starsender_key')
   ),
 ));
 
@@ -60,7 +60,7 @@ function relogDevice($idDevice){
   CURLOPT_CUSTOMREQUEST => 'POST',
   CURLOPT_HTTPHEADER => array(
     'Content-Type:application/json',
-    'Authorization: ' . env('STARSENDER_KEY')
+    'Authorization: ' . config('services.blast.starsender_key')
   ),
 ));
 
@@ -84,7 +84,7 @@ function addDevices($name){
     CURLOPT_POSTFIELDS => json_encode($data),
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('STARSENDER_KEY')
+        'Authorization: ' . config('services.blast.starsender_key')
     ),
     ));
 
@@ -104,7 +104,7 @@ function deleteDevice($id){
     CURLOPT_CUSTOMREQUEST => 'DELETE',
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('STARSENDER_KEY')
+        'Authorization: ' . config('services.blast.starsender_key')
     ),
     ));
 
@@ -131,7 +131,7 @@ function sendWhatshapp($to,$message){
     CURLOPT_POSTFIELDS => json_encode($pesan),
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('DEVICE_KEY')
+        'Authorization: ' . config('services.blast.device_key')
     ),
     ));
 
@@ -161,7 +161,7 @@ function sendWhatshappGroup($groupNam,$message){
     CURLOPT_POSTFIELDS => json_encode($pesan),
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('DEVICE_KEY')
+        'Authorization: ' . config('services.blast.device_key')
     ),
     ));
 
@@ -182,38 +182,12 @@ function listGroupWa(){
     CURLOPT_CUSTOMREQUEST => 'GET',
     CURLOPT_HTTPHEADER => array(
         'Content-Type:application/json',
-        'Authorization: ' . env('DEVICE_KEY')
+        'Authorization: ' . config('services.blast.device_key')
     ),
     ));
 
     $response = curl_exec($curl);
     return $response;
-}
-
-function sendMessageUrl($number,$message) 
-{
-        $target_url = env('WA_BASE_URL');
-        $apikey = env('WA_SENDER');
-        
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => $target_url.'/api/sendText?message='.rawurlencode($message).'&tujuan='.rawurlencode($number.'@s.whatsapp.net'),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 0,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_HTTPHEADER => array(
-            'apikey: '.$apikey
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-        return $response;
 }
 
 /**
@@ -248,7 +222,7 @@ function sendWaBlast(array $messages, array $devices = [])
         $response = $client->post('https://api.starsender.online/api/send/rotator', [
             'headers' => [
                 'Content-Type'  => 'application/json',
-                'Authorization' => env('STARSENDER_KEY'),
+                'Authorization' =>  config('services.blast.starsender_key'),
             ],
             'json' => $payload,
         ]);

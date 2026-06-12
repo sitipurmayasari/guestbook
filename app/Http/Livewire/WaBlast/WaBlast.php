@@ -186,7 +186,7 @@ class WaBlast extends Component
             'delay' => 15,
         ])->values()->toArray();
 
-        $deviceId = (int) env('DEVICE_BLAST_ID', 0);
+        $deviceId = (int) config('services.blast.device_id');
         if ($deviceId === 0) {
             $this->dispatchBrowserEvent('alert', [
                 'type'    => 'error',

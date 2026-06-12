@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'blast' => [
+        'device_id' => env('DEVICE_BLAST_ID', 0),
+        'starsender_key' => env('STARSENDER_KEY', ''),
+        'device_key' => env('DEVICE_KEY', ''),
+    ],
+
 ];
