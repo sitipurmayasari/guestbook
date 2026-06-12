@@ -14,6 +14,7 @@ use App\Http\Livewire\Visitors\CreateVisitors;
 use App\Http\Livewire\Visitors\DetailVisitors;
 use App\Http\Livewire\Report\ReportPengunjung;
 use App\Http\Livewire\WaBlast\WaBlast;
+use App\Http\Livewire\WaBlast\ManualBlast;
 
 Route::redirect('/', 'login');
 Route::get('/partisipan/{slug}', [PartisipanController::class,'index'])->name('partisipan');
@@ -49,5 +50,6 @@ Route::group(['middleware' => ['auth:sanctum','verified']], function () {
     Route::get('/report/pengunjung/pdf', [ReportPengunjung::class,'print'])->name('pdf.pengunjung');
 
     Route::get('/wa-blast', WaBlast::class)->name('wa-blast');
+    Route::get('/manual-blast', ManualBlast::class)->name('manual-blast');
    
 });

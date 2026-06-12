@@ -3,6 +3,193 @@
 use App\Models\RequestEksport;
 use App\Models\SettingNumberSKA;
 
+
+//list device
+function listDevice(){
+   $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.starsender.online/api/devices',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('STARSENDER_KEY')
+    ),
+));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+function detailDevice($idDevice){
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.starsender.online/api/devices/'.$idDevice,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type:application/json',
+    'Authorization: ' . env('STARSENDER_KEY')
+  ),
+));
+
+
+    $response = curl_exec($curl);
+    return $response;
+}
+function relogDevice($idDevice){
+    $curl = curl_init();
+   curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://api.starsender.online/api/devices/'.$idDevice.'/relog',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_HTTPHEADER => array(
+    'Content-Type:application/json',
+    'Authorization: ' . env('STARSENDER_KEY')
+  ),
+));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+function addDevices($name){
+    $curl = curl_init();
+    $data = [
+        "name" => $name
+    ];
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.starsender.online/api/devices/create/scan',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($data),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('STARSENDER_KEY')
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+function deleteDevice($id){
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.starsender.online/api/whatsapp/devices/'.$id,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'DELETE',
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('STARSENDER_KEY')
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+function sendWhatshapp($to,$message){
+    $curl = curl_init();
+    $pesan = [
+    "messageType" => "text",
+    "to" => $to,
+    "body" => $message,
+    ];
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => env('WA_URL') . '/send',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($pesan),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('DEVICE_KEY')
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+
+function sendWhatshappGroup($groupNam,$message){
+   $curl = curl_init();
+
+    $pesan = [
+        "messageType" => "text",
+        "to" => $groupNam,
+        "body" => $message,
+        
+    ];
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.starsender.online/api/send/grup',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => json_encode($pesan),
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('DEVICE_KEY')
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+
+function listGroupWa(){
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://api.starsender.online/api/whatsapp/groups',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_HTTPHEADER => array(
+        'Content-Type:application/json',
+        'Authorization: ' . env('DEVICE_KEY')
+    ),
+    ));
+
+    $response = curl_exec($curl);
+    return $response;
+}
+
 function sendMessageUrl($number,$message) 
 {
         $target_url = env('WA_BASE_URL');
@@ -28,6 +215,50 @@ function sendMessageUrl($number,$message)
         curl_close($curl);
         return $response;
 }
+
+/**
+ * Kirim WA Blast ke banyak penerima via StarSender Rotator API
+ *
+ * @param  array  $messages  Array of ['to' => '62xxx', 'body' => '...', 'delay' => 15]
+ * @param  array  $devices   Array of ['device_id' => id, 'limit' => 50]
+ */
+function sendWaBlast(array $messages, array $devices = [])
+{
+    // Ensure numeric fields are proper integers (Go API is strict about types)
+    $devices = array_map(function ($d) {
+        return [
+            'device_id' => (int) ($d['device_id'] ?? 0),
+            'limit'     => (int) ($d['limit']     ?? 100),
+        ];
+    }, $devices);
+
+    $messages = array_map(function ($m) {
+        $m['delay'] = (int) ($m['delay'] ?? 15);
+        return $m;
+    }, $messages);
+
+    $payload = [
+        'mode'     => 'round_robin',
+        'devices'  => $devices,
+        'messages' => $messages,
+    ];
+
+    try {
+        $client   = new \GuzzleHttp\Client(['timeout' => 30]);
+        $response = $client->post('https://api.starsender.online/api/send/rotator', [
+            'headers' => [
+                'Content-Type'  => 'application/json',
+                'Authorization' => env('STARSENDER_KEY'),
+            ],
+            'json' => $payload,
+        ]);
+
+        return (string) $response->getBody();
+    } catch (\Throwable $e) {
+        return json_encode(['status' => false, 'message' => $e->getMessage()]);
+    }
+}
+
 function toEmpatDigit($number){
   if ($number < 10) {
     return "000".$number;

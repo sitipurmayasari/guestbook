@@ -118,21 +118,42 @@
                     </li>
 
                     {{-- wa blast --}}
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['wa-blast'])) {{ 'bg-yellow-700' }} @endif">
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['wa-blast', 'manual-blast'])) {{ 'bg-yellow-700' }} @endif" x-data="{ open: {{ in_array(Request::segment(1), ['wa-blast', 'manual-blast']) ? 'true' : 'false' }} }">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150"
-                        href="{{ route('wa-blast') }}">
-                            <div class="flex items-center">
-                                <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        class="fill-current @if (in_array(Request::segment(1), ['wa-blast'])) {{ 'text-yellow-500' }}@else{{ 'text-slate-400' }} @endif"
-                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                                    <path
-                                        class="fill-current @if (in_array(Request::segment(1), ['wa-blast'])) {{ 'text-yellow-300' }}@else{{ 'text-slate-600' }} @endif"
-                                        d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.849L.073 23.51a.75.75 0 00.918.918l5.662-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.716 9.716 0 01-4.964-1.358l-.356-.212-3.693.951.968-3.583-.232-.368A9.715 9.715 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/>
-                                </svg>
-                                <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">WA Blast</span>
+                        href="#0" @click.prevent="open = !open">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            class="fill-current @if (in_array(Request::segment(1), ['wa-blast', 'manual-blast'])) {{ 'text-yellow-500' }}@else{{ 'text-slate-400' }} @endif"
+                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                                        <path
+                                            class="fill-current @if (in_array(Request::segment(1), ['wa-blast', 'manual-blast'])) {{ 'text-yellow-300' }}@else{{ 'text-slate-600' }} @endif"
+                                            d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.532 5.849L.073 23.51a.75.75 0 00.918.918l5.662-1.459A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.716 9.716 0 01-4.964-1.358l-.356-.212-3.693.951.968-3.583-.232-.368A9.715 9.715 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/>
+                                    </svg>
+                                    <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">WA Blast</span>
+                                </div>
+                                <div class="flex shrink-0 ml-2">
+                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                                    </svg>
+                                </div>
                             </div>
                         </a>
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-9 mt-1" :class="!open &amp;&amp; 'hidden'" x-show="open" x-transition>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Tamu</span>
+                                    </a>
+                                </li>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('manual-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('manual-blast') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Manual</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
 
                     {{-- manage user --}}
