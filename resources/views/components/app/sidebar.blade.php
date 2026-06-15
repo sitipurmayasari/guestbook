@@ -118,7 +118,7 @@
                     </li>
 
                     {{-- wa blast --}}
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['wa-blast', 'manual-blast'])) {{ 'bg-yellow-700' }} @endif" x-data="{ open: {{ in_array(Request::segment(1), ['wa-blast', 'manual-blast']) ? 'true' : 'false' }} }">
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['wa-blast', 'manual-blast'])) {{ 'bg-yellow-700' }} @endif" x-data="{ open: {{ (in_array(Request::segment(1), ['wa-blast', 'manual-blast']) || (Request::segment(1) === 'wa-blast' && Request::segment(2) === 'contacts')) ? 'true' : 'false' }} }">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150"
                         href="#0" @click.prevent="open = !open">
                             <div class="flex items-center justify-between">
@@ -150,6 +150,11 @@
                                 <li class="mb-1 last:mb-0">
                                     <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('manual-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('manual-blast') }}">
                                         <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Manual</span>
+                                    </a>
+                                </li>
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast.contacts.*')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast.contacts.index') }}">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Kontak</span>
                                     </a>
                                 </li>
                             </ul>
