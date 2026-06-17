@@ -154,13 +154,19 @@
                         <div class="col-span-6 sm:col-span-6 mt-2 mb-10">
                             <div class="col-span-6 sm:col-span-3">
                                 <div id="my_camera"></div>
-                                <button class="mt-5  btn w-full bg-blue-500 hover:bg-blue-600 text-white" onClick="take_snapshot()">
+                                <button id="camera-btn" class="mt-5 btn w-full bg-blue-500 hover:bg-blue-600 text-white" onClick="take_snapshot()">
                                     <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                                         <path
                                             d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                                     </svg>
-                                    <span class=" ml-2">AMBIL GAMBAR </span>
+                                    <span class="ml-2">AMBIL GAMBAR</span>
                                 </button>
+                                <div id="upload-fallback" style="display:none;" class="mt-3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Upload Foto (kamera tidak tersedia)</label>
+                                    <input type="file" accept="image/*" capture="user"
+                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                        onchange="handleFileUpload(this)" />
+                                </div>
                             </div>
             
                             {{-- <form enctype="multipart/form-data"> --}}
@@ -239,6 +245,7 @@
     <script language="JavaScript">
         window.onload = function() {
             jam();
+            initWebcam();
         }
 
         function jam() {
@@ -258,38 +265,50 @@
             e = e < 10 ? '0' + e : e;
             return e;
         }
-        Webcam.set({
 
-
-            height: 350,
-
-            image_format: 'jpeg',
-
-            jpeg_quality: 90
-
-        });
-
-
-
-        Webcam.attach('#my_camera');
-
-
-
-        function take_snapshot() {
-
-            Webcam.snap(function(data_uri) {
-
-                $(".image-tag").val(data_uri);
-                // how to push model livewire
-
-
-                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
-
-                window.livewire.emit('imageUpload', data_uri);
-
-
+        function initWebcam() {
+            Webcam.set({
+                width: 320,
+                height: 240,
+                dest_width: 320,
+                dest_height: 240,
+                image_format: 'jpeg',
+                jpeg_quality: 90,
+                force_flash: false,
+                flip_horiz: false,
             });
 
+            Webcam.on('error', function(err) {
+                document.getElementById('my_camera').innerHTML =
+                    '<div class="text-red-500 text-sm p-2 border border-red-300 rounded">' +
+                    '<strong>Kamera tidak dapat diakses:</strong> ' + err +
+                    '</div>';
+                document.getElementById('camera-btn').style.display = 'none';
+                document.getElementById('upload-fallback').style.display = 'block';
+            });
+
+            Webcam.attach('#my_camera');
+        }
+
+        function take_snapshot() {
+            Webcam.snap(function(data_uri) {
+                $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+                window.livewire.emit('imageUpload', data_uri);
+            });
+        }
+
+        function handleFileUpload(input) {
+            var file = input.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data_uri = e.target.result;
+                $(".image-tag").val(data_uri);
+                document.getElementById('results').innerHTML = '<img src="' + data_uri + '" width="100%" class="rounded-md"/>';
+                window.livewire.emit('imageUpload', data_uri);
+            };
+            reader.readAsDataURL(file);
         }
     </script>
 @endpush
