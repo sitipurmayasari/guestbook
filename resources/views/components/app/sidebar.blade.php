@@ -143,17 +143,17 @@
                         <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                             <ul class="pl-9 mt-1" :class="!open &amp;&amp; 'hidden'" x-show="open" x-transition>
                                 <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast') }}">
+                                    <a class="block text-white hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast') }}">
                                         <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Tamu</span>
                                     </a>
                                 </li>
                                 <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('manual-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('manual-blast') }}">
+                                    <a class="block text-white hover:text-slate-200 transition duration-150 truncate @if(Route::is('manual-blast')){{ '!text-yellow-500' }}@endif" href="{{ route('manual-blast') }}">
                                         <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Manual</span>
                                     </a>
                                 </li>
                                 <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast.contacts.*')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast.contacts.index') }}">
+                                    <a class="block text-white hover:text-slate-200 transition duration-150 truncate @if(Route::is('wa-blast.contacts.*')){{ '!text-yellow-500' }}@endif" href="{{ route('wa-blast.contacts.index') }}">
                                         <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Kontak</span>
                                     </a>
                                 </li>

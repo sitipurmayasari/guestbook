@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-span-6 sm:col-span-6">
                             <x-jet-label for="telp" value="No. Telp" />
-                            <x-jet-input id="telp" type="number"  class="bg-white mt-1 block w-full"
+                            <x-jet-input id="telp" type="number" minlength="10" class="bg-white mt-1 block w-full"
                             wire:model="telp" />
                             <x-jet-input-error for="telp" class="mt-2" />
                         </div>

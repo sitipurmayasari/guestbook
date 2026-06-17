@@ -39,7 +39,7 @@ class CreateVisitors extends Component
     public function store(){
         $this->validate([
             'name' => 'required',
-            'telp' => 'required',    
+            'telp' => 'required|min:10',    
             'origin' => 'required',
             'purpose' => 'required'       
         ]);

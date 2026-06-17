@@ -61,7 +61,7 @@
                 </label>
                 <input type="text" name="telp" value="{{ old('telp') }}"
                        class="form-input rounded-md shadow-sm block w-full dark:bg-slate-700 dark:border-slate-600 dark:text-white @error('telp') border-red-400 @enderror"
-                       placeholder="628123456789" required>
+                       placeholder="08123456789" pattern="[0-9]{10,}" inputmode="numeric" required>
                 @error('telp')
                     <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                 @enderror

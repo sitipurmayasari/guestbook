@@ -16,7 +16,7 @@ class WaBlast extends Component
     public $search    = '';
     public $paginate  = 10;
     public $messageTitle = 'Informasi Layanan BBPOM Banjarbaru';
-    public $message   = 'Halo {nama}, kami dari BBPOM Banjarbaru ingin menginformasikan kepada Anda terkait layanan kami. Terima kasih sudah berkunjung.';
+    public $message   = 'Halo {nama}, kami dari BBPOM di Banjarbaru ingin menginformasikan kepada Anda terkait layanan kami. Terima kasih sudah berkunjung.';
     public $selected      = [];
     public $selectAll     = false;
     public $pageIds       = [];
