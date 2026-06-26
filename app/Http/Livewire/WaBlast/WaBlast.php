@@ -11,6 +11,7 @@ class WaBlast extends Component
 {
     use WithPagination;
 
+    
     public $category  = '';
     public $period    = 1;
     public $search    = '';
@@ -150,6 +151,55 @@ class WaBlast extends Component
     }
 
     /**
+     * Bersihkan body pesan sebelum dikirim:
+     * - Hapus karakter tak terlihat (zero-width space, NBSP, dll) yang sering
+     *   muncul saat copy-paste URL dari browser dan mencegah WhatsApp mendeteksi
+     *   link secara otomatis.
+     * - Pastikan URL berada di baris tersendiri.
+     */
+    private function normalizeMessageBody(string $body): string
+    {
+        // Hapus karakter zero-width & invisible yang merusak deteksi URL di WA
+        $body = preg_replace('/[\x{200B}\x{200C}\x{200D}\x{FEFF}\x{00AD}\x{00A0}]/u', '', $body);
+
+        // Normalisasi line ending
+        $body = str_replace(["\r\n", "\r"], "\n", $body);
+
+        // Pastikan URL tidak menempel ke teks sebelumnya (push ke baris baru)
+        $body = preg_replace('/([^\n])(https?:\/\/)/iu', "$1\n$2", $body);
+
+        return trim($body);
+    }
+
+    /**
+     * Computed property: preview HTML pesan dengan URL sebagai link yang bisa diklik.
+     * Digunakan di blade untuk preview real-time.
+     */
+    public function getMessagePreviewHtmlProperty(): string
+    {
+        // Escape HTML terlebih dahulu untuk cegah XSS
+        $html = htmlspecialchars($this->message, ENT_QUOTES, 'UTF-8');
+
+        // Ganti {nama} dengan contoh nama
+        $html = str_replace('{nama}', '<strong>Nama Tamu</strong>', $html);
+
+        // Konversi URL menjadi tag <a> yang bisa diklik
+        $html = preg_replace_callback(
+            '/\b(https?:\/\/[^\s<>"]+)/i',
+            function ($m) {
+                $href = htmlspecialchars_decode($m[1], ENT_QUOTES);
+                return '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8')
+                    . '" target="_blank" rel="noopener noreferrer"
+                       class="text-blue-500 underline break-all">'
+                    . $m[1] . '</a>';
+            },
+            $html
+        );
+
+        return nl2br($html);
+    }
+
+    /**
      * Kirim WA Blast ke semua yang tercentang via StarSender Rotator API
      */
     public function sendBlast()
@@ -179,10 +229,8 @@ class WaBlast extends Component
         }
 
         $messages = $visitors->map(fn ($v) => [
-            'to'    => $this->formatWaNumber(
-                $v->telp
-            ),
-            'body'  => str_replace('{nama}', $v->name, $this->message),
+            'to'    => $this->formatWaNumber($v->telp),
+            'body'  => $this->normalizeMessageBody(str_replace('{nama}', $v->name, $this->message)),
             'delay' => 15,
         ])->values()->toArray();
 
@@ -244,6 +292,7 @@ class WaBlast extends Component
         $this->pageIds = $visitors->pluck('id')->toArray();
         $selectedStr   = array_map('strval', $this->selected);
 
-        return view('livewire.wa-blast.wa-blast', compact('visitors', 'kategoris', 'selectedStr'));
+        return view('livewire.wa-blast.wa-blast', compact('visitors', 'kategoris', 'selectedStr'))
+            ->with('messagePreviewHtml', $this->messagePreviewHtml);
     }
 }

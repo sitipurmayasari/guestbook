@@ -91,6 +91,48 @@ class ManualBlast extends Component
         return '62' . $number;
     }
 
+    /**
+     * Bersihkan body pesan sebelum dikirim:
+     * - Hapus karakter tak terlihat (zero-width space, NBSP, dll) yang sering
+     *   muncul saat copy-paste URL dari browser dan mencegah WhatsApp mendeteksi
+     *   link secara otomatis.
+     * - Pastikan URL berada di baris tersendiri.
+     */
+    private function normalizeMessageBody(string $body): string
+    {
+        // Hapus karakter zero-width & invisible yang merusak deteksi URL di WA
+        $body = preg_replace('/[\x{200B}\x{200C}\x{200D}\x{FEFF}\x{00AD}\x{00A0}]/u', '', $body);
+
+        // Normalisasi line ending
+        $body = str_replace(["\r\n", "\r"], "\n", $body);
+
+        // Pastikan URL tidak menempel ke teks sebelumnya (push ke baris baru)
+        $body = preg_replace('/([^\n])(https?:\/\/)/iu', "$1\n$2", $body);
+
+        return trim($body);
+    }
+
+    /**
+     * Computed property: preview HTML pesan dengan URL sebagai link yang bisa diklik.
+     */
+    public function getMessagePreviewHtmlProperty(): string
+    {
+        $html = htmlspecialchars($this->message, ENT_QUOTES, 'UTF-8');
+        $html = str_replace('{nama}', '<strong>Nama Kontak</strong>', $html);
+        $html = preg_replace_callback(
+            '/\b(https?:\/\/[^\s<>"]+)/i',
+            function ($m) {
+                $href = htmlspecialchars_decode($m[1], ENT_QUOTES);
+                return '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8')
+                    . '" target="_blank" rel="noopener noreferrer"
+                       class="text-blue-500 underline break-all">'
+                    . $m[1] . '</a>';
+            },
+            $html
+        );
+        return nl2br($html);
+    }
+
     public function sendBlast()
     {
         if (empty($this->selected)) {
@@ -119,7 +161,7 @@ class ManualBlast extends Component
 
         $messages = $contacts->map(fn ($c) => [
             'to'    => $this->formatWaNumber($c->telp),
-            'body'  => str_replace('{nama}', $c->name, $this->message),
+            'body'  => $this->normalizeMessageBody(str_replace('{nama}', $c->name, $this->message)),
             'delay' => 15,
         ])->values()->toArray();
 
@@ -169,7 +211,8 @@ class ManualBlast extends Component
         $this->pageIds  = $contacts->pluck('id')->toArray();
         $selectedStr    = array_map('strval', $this->selected);
 
-        return view('livewire.wa-blast.manual-blast', compact('contacts', 'selectedStr'));
+        return view('livewire.wa-blast.manual-blast', compact('contacts', 'selectedStr'))
+            ->with('messagePreviewHtml', $this->messagePreviewHtml);
     }
 }
 
