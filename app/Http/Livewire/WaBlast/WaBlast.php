@@ -188,10 +188,7 @@ class WaBlast extends Component
             '/\b(https?:\/\/[^\s<>"]+)/i',
             function ($m) {
                 $href = htmlspecialchars_decode($m[1], ENT_QUOTES);
-                return '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8')
-                    . '" target="_blank" rel="noopener noreferrer"
-                       class="text-blue-500 underline break-all">'
-                    . $m[1] . '</a>';
+                return '<a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener noreferrer" style="color:#3b82f6;text-decoration:underline;word-break:break-all;">' . $m[1] . '</a>';
             },
             $html
         );
