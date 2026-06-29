@@ -159,8 +159,14 @@ class WaBlast extends Component
      */
     private function normalizeMessageBody(string $body): string
     {
-        // Hapus karakter zero-width & invisible yang merusak deteksi URL di WA
-        $body = preg_replace('/[\x{200B}\x{200C}\x{200D}\x{FEFF}\x{00AD}\x{00A0}]/u', '', $body);
+        // Hapus semua karakter invisible/directional yang diinjeksi browser saat
+        // copy-paste URL (termasuk LRM \u200E dan RLM \u200F dari Chrome/Edge
+        // yang tidak terlihat tapi merusak deteksi link di WhatsApp)
+        $body = preg_replace(
+            '/[\x{00A0}\x{00AD}\x{180E}\x{200B}-\x{200F}\x{2028}\x{2029}\x{202A}-\x{202F}\x{2060}\x{FEFF}]/u',
+            '',
+            $body
+        );
 
         // Normalisasi line ending
         $body = str_replace(["\r\n", "\r"], "\n", $body);
